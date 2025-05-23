@@ -31,7 +31,6 @@ class RegistrationRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'is_admin' => 'boolean',
             'email' => [
                 'required',
                 'string',
@@ -54,7 +53,7 @@ class RegistrationRequest extends FormRequest
      */
     protected function passedValidation(): void
     {
-        $this->replace(['is_admin' => false]);
+
     }
 
     public function attributes()

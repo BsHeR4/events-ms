@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
+            $table->date('start_time');
+            $table->date('end_time');
             $table->foreignId('event_type_id')->constrained('event_types')->cascadeOnDelete();
             $table->foreignId('location_id')->constrained('locations')->cascadeOnDelete();
             $table->timestamps();

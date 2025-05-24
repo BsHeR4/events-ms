@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 use App\Services\AuthService;
+use App\Services\EventTypeService;
 use App\Services\Interfaces\AuthServiceInterface;
+use App\Services\Interfaces\EventTypeServiceInterface;
+use App\Services\Interfaces\LocationServiceInterface;
+use App\Services\LocationService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(AuthServiceInterface::class, AuthService::class);
+        $this->app->bind(LocationServiceInterface::class, LocationService::class);
+        $this->app->bind(EventTypeServiceInterface::class, EventTypeService::class);
     }
 
     /**

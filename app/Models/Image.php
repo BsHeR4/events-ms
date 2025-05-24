@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
+    protected $fillable = [
+        'image_path'
+    ];
     /**
      * This defines a polymorphic relationship, allowing the model to belong to multiple imageable entities.
      * For example, an image can be associated with different models like events, locations.

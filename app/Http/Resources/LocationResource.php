@@ -18,6 +18,7 @@ class LocationResource extends JsonResource
             'id' => $this->id,
             'governorate' => $this->governorate,
             'street' => $this->street,
+            'image_path' => $this->image->image_path,
         ];
     }
 }

@@ -57,6 +57,9 @@ abstract class BaseCrudService implements BaseCrudServiceInterface
     public function store(array $data)
     {
         return $this->handle(function () use ($data) {
+            if (isset($data['image'])) {
+                $imagePath = upload_img($data['image'], "images/MembershipApplications"); // public disk by default
+            }
             return $this->model->create($data);
         });
     }
@@ -87,5 +90,11 @@ abstract class BaseCrudService implements BaseCrudServiceInterface
         return $this->handle(function () use ($id) {
             return $this->model->findOrFail($id)->delete();
         });
+    }
+
+    protected function createOrUpdateImage(Model $model, $file, string $folder = 'images')
+    {
+        $path = upload_img($file, $folder);
+        $model->image()->updateOrCreate([], ['image_path' => $path]);
     }
 }

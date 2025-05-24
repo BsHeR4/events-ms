@@ -12,4 +12,36 @@ class LocationService extends BaseCrudService implements LocationServiceInterfac
     {
         $this->model = $model;
     }
+
+    public function store(array $data)
+    {
+        return $this->handle(function () use ($data) {
+            $image = $data['image_path'] ?? null;
+            unset($data['image_path']);
+
+            $location = parent::store($data);
+
+            if ($image) {
+                $this->createOrUpdateImage($location, $image, 'images/locations');
+            }
+
+            return $location;
+        });
+    }
+
+    public function update(array $data, string $id)
+    {
+        return $this->handle(function () use ($data, $id) {
+            $image = $data['image_path'] ?? null;
+            unset($data['image_path']);
+
+            $location = parent::update($data, $id);
+
+            if ($image) {
+                $this->createOrUpdateImage($location, $image, 'images/locations');
+            }
+
+            return $location;
+        });
+    }
 }

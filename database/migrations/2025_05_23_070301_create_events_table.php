@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->integer('max_member')->nullable();
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->foreignId('organizer_id')->constrained('users')->cascadeOnDelete();

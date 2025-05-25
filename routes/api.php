@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\EventTypeController;
 use App\Http\Controllers\Api\LocationController;
 use Illuminate\Http\Request;
@@ -16,3 +17,4 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanct
 
 Route::apiResource('locations', LocationController::class);
 Route::apiResource('event_types', EventTypeController::class);
+Route::apiResource('events', EventController::class)->middleware('auth:sanctum');

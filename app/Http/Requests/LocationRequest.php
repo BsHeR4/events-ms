@@ -24,7 +24,7 @@ class LocationRequest extends FormRequest
         return [
             'governorate' => 'required|string|max:255',
             'street' => 'required|string|max:255',
-            'image_path' => 'required|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

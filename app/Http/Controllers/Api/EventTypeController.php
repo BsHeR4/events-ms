@@ -20,13 +20,13 @@ class EventTypeController extends Controller
     protected $eventTypeService;
 
     /**
-     * LocationController constructor
+     * EventTypeController constructor
      *
      * @param EventTypeServiceInterface $eventTypeService
      */
     public function __construct(EventTypeServiceInterface $eventTypeService)
     {
-        // Inject the eventTypeService to handle location-related logic
+        // Inject the eventTypeService to handle eventType-related logic
         $this->eventTypeService = $eventTypeService;
     }
 

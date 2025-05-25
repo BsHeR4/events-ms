@@ -32,8 +32,8 @@ abstract class BaseCrudService implements BaseCrudServiceInterface
      */
     public function getAll()
     {
-        return  $this->handle(function () {
-            return $this->model::paginate(10);
+        return $this->handle(function () {
+            return $this->model->paginate(10);
         });
     }
 
@@ -57,9 +57,6 @@ abstract class BaseCrudService implements BaseCrudServiceInterface
     public function store(array $data)
     {
         return $this->handle(function () use ($data) {
-            if (isset($data['image'])) {
-                $imagePath = upload_img($data['image'], "images/MembershipApplications"); // public disk by default
-            }
             return $this->model->create($data);
         });
     }

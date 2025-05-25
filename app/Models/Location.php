@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
+
     protected $fillable = [
         'governorate',
         'street',
@@ -20,5 +21,4 @@ class Location extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
-    
 }

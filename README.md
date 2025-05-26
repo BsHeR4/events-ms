@@ -8,7 +8,7 @@
 
 The API follows **RESTful standards**, applying modern **design patterns** such as the **Service Layer**, **Polymorphic Relationships**, and **Clean Architecture** principles. It emphasizes scalability, maintainability, and security, making it suitable for both training and production-grade event management platforms.
 
-###  Key Features
+### Key Features
 
 -  **CRUD Functionality** for Events, Locations, Event Types, and Reservations
 -  **Role-Based Access Control (RBAC)** using Spatie Permissions (Admin / Organizer / User)
@@ -22,7 +22,7 @@ The API follows **RESTful standards**, applying modern **design patterns** such 
 -  **Mutators & Accessors** to format and sanitize model data
 -  **Seeder & Factory Support** with proper role assignments and data integrity
 
-###  Architectural Highlights
+### Architectural Highlights
 
 -  Service-driven structure with thin controllers and reusable service logic
 -  Centralized error handling using the `handle()` wrapper method in abstract services

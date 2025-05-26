@@ -7,9 +7,18 @@ use App\Http\Requests\EventTypeRequest;
 use App\Http\Resources\EventTypeResource;
 use App\Services\Interfaces\EventTypeServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class EventTypeController extends Controller
+class EventTypeController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('role:admin', except: ['index', 'show']),
+        ];
+    }
 
     /**
      * Service to handle eventType-related logic 

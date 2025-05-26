@@ -45,4 +45,11 @@ class EventService extends BaseCrudService implements EventServiceInterface
             return $event;
         });
     }
+
+    public function usersEvents()
+    {
+        return $this->handle(function () {
+            return Event::usersEvents(auth()->id())->get();
+        });
+    }
 }

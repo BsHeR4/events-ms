@@ -7,9 +7,19 @@ use App\Http\Requests\LocationRequest;
 use App\Http\Resources\LocationResource;
 use App\Services\Interfaces\LocationServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Arr;
 
-class LocationController extends Controller
+class LocationController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('role:admin', except: ['index', 'show']),
+        ];
+    }
 
     /**
      * Service to handle location-related logic 

@@ -23,7 +23,7 @@ class EventResource extends JsonResource
             'end_time' => $this->end_time,
             'image_path' => optional($this->image)->image_path,
             'organizer' => new UserResource($this->organizer),
-            'event_type' => ($this->eventType)->name,
+            'event_type' => new EventTypeResource($this->eventType),
             'location' => new LocationResource($this->location),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at

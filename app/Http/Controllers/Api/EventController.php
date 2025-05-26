@@ -6,9 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EventRequest;
 use App\Http\Resources\EventResource;
 use App\Services\Interfaces\EventServiceInterface;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class EventController extends Controller
+class EventController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('role:admin|organizer', except: ['index', 'show', 'usersEvents']),
+        ];
+    }
 
     /**
      * Service to handle event-related logic 
@@ -75,5 +84,11 @@ class EventController extends Controller
     {
         $this->eventService->destroy($id);
         return $this->successResponse('success');
+    }
+
+    public function usersEvents()
+    {
+        $events = $this->eventService->usersEvents();
+        return $this->successResponse('success', EventResource::collection($events));
     }
 }

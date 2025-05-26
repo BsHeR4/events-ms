@@ -16,12 +16,16 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
+
+        $start = now()->addDays(rand(1, 5));
+        $end = (clone $start)->addHours(rand(1, 6));
+
         return [
             'name' => $this->faker->sentence(2),
             'description' => $this->faker->paragraph,
             'max_member' => $this->faker->numberBetween(null, 100),
-            'start_time' => now()->addDays(rand(1, 10)),
-            'end_time' => fn (array $attributes) => \Carbon\Carbon::parse($attributes['start_time'])->addHours(rand(5, 10)),
+            'start_time' => $start,
+            'end_time' => $end,
         ];
     }
 }

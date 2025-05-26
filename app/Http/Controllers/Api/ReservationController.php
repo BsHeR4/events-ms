@@ -6,9 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ReservationRequest;
 use App\Http\Resources\ReservationResource;
 use App\Services\Interfaces\ReservationServiceInterface;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class ReservationController extends Controller
+class ReservationController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('reservation.owner', except: ['index', 'show', 'store']),
+        ];
+    }
 
     /**
      * Service to handle reservations-related logic 
@@ -54,16 +63,6 @@ class ReservationController extends Controller
     public function show(string $id)
     {
         $reservation =  $this->reservationService->get($id);
-        return $this->successResponse('success', new ReservationResource($reservation));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ReservationRequest $request, string $id)
-    {
-        $data = $request->validated();
-        $reservation = $this->reservationService->update($data, $id);
         return $this->successResponse('success', new ReservationResource($reservation));
     }
 

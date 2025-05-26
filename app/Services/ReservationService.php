@@ -12,4 +12,13 @@ class ReservationService extends BaseCrudService implements ReservationServiceIn
     {
         $this->model = $model;
     }
+
+    public function getAll()
+    {
+        return $this->handle(
+            function () {
+                return Reservation::userReservation(auth()->id())->paginate(10);
+            }
+        );
+    }
 }

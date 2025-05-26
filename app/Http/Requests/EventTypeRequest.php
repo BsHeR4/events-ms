@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class EventTypeRequest extends FormRequest
 {
@@ -24,5 +26,32 @@ class EventTypeRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
         ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'Name',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'required' => 'the :attribute should not be empty, please add the :attribute!',
+            'max' => 'the :attribute is too long!',
+        ];
+    }
+
+    /**
+     * if the validation failed it return a json response
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Failed Validate Data',
+            'errors' => $validator->errors(),
+        ], 422));
     }
 }

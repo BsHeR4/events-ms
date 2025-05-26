@@ -16,6 +16,7 @@ class EventController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('role:admin|organizer', except: ['index', 'show', 'usersEvents']),
+            new Middleware('event.owner', except: ['index', 'show', 'store', 'usersEvents']),
         ];
     }
 

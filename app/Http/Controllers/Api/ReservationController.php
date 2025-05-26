@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ReservationRequest;
 use App\Http\Resources\ReservationResource;
 use App\Services\Interfaces\ReservationServiceInterface;
-use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
@@ -15,19 +14,19 @@ class ReservationController extends Controller
      * Service to handle reservations-related logic 
      * and separating it from the controller
      * 
-     * @var ReservationsServiceInterface
+     * @var ReservationServiceInterface
      */
-    protected $reservationsService;
+    protected $reservationService;
 
     /**
-     * ReservationsService constructor
+     * ReservationService constructor
      *
-     * @param ReservationsServiceInterface $locationService
+     * @param ReservationServiceInterface $reservationService
      */
-    public function __construct(ReservationServiceInterface $reservationsService)
+    public function __construct(ReservationServiceInterface $reservationService)
     {
-        // Inject the reservationsService to handle location-related logic
-        $this->reservationsService = $reservationsService;
+        // Inject the reservationService to handle reservation-related logic
+        $this->reservationService = $reservationService;
     }
 
     /**
@@ -35,7 +34,8 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        $reservations = $this->reservationService->getAll();
+        return $this->successResponse('success', ReservationResource::collection($reservations));
     }
 
     /**
@@ -44,7 +44,7 @@ class ReservationController extends Controller
     public function store(ReservationRequest $request)
     {
         $data = $request->validated();
-        $reservation = $this->reservationsService->store($data);
+        $reservation = $this->reservationService->store($data);
         return $this->successResponse('success', new ReservationResource($reservation));
     }
 
@@ -53,15 +53,18 @@ class ReservationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $reservation =  $this->reservationService->get($id);
+        return $this->successResponse('success', new ReservationResource($reservation));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ReservationRequest $request, string $id)
     {
-        //
+        $data = $request->validated();
+        $reservation = $this->reservationService->update($data, $id);
+        return $this->successResponse('success', new ReservationResource($reservation));
     }
 
     /**
@@ -69,6 +72,7 @@ class ReservationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->reservationService->destroy($id);
+        return $this->successResponse('success');
     }
 }

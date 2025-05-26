@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
 
 class Event extends Model
 {
-    use Prunable;
+    use Prunable, HasFactory;
 
     protected $fillable = [
         'name',

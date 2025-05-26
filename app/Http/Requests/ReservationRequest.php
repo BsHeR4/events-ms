@@ -4,7 +4,9 @@ namespace App\Http\Requests;
 
 use App\Rules\CheckEventCapacity;
 use App\Rules\UniqueReservation;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ReservationRequest extends FormRequest
 {
@@ -34,5 +36,33 @@ class ReservationRequest extends FormRequest
         $this->merge([
             'user_id' => auth()->id(),
         ]);
+    }
+
+    public function attributes()
+    {
+        return [
+            'user_id' => 'User',
+            'event_id' => 'Event',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'required' => 'the :attribute should not be empty, please add the :attribute!',
+            'exists' => ':attribute does not exist',
+        ];
+    }
+
+    /**
+     * if the validation failed it return a json response
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Failed Validate Data',
+            'errors' => $validator->errors(),
+        ], 422));
     }
 }
